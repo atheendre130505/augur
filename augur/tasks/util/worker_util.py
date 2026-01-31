@@ -1,5 +1,4 @@
 #SPDX-License-Identifier: MIT
-import json
 #import gunicorn.app.base
 import numpy as np
 from celery import group
@@ -71,6 +70,7 @@ def remove_duplicate_dicts(data: List[dict]) -> List[dict]:
             unique_data.append(d)
     return unique_data
 
+
 def remove_duplicates_by_uniques(data, uniques):
 
     unique_values = {}
@@ -84,7 +84,8 @@ def remove_duplicates_by_uniques(data, uniques):
     for x in data:
 
         # creates a key out of the uniques as a tuple to avoid string collision issues
-        key = tuple(x[unique] for unique in uniques)
+        # and handles nested unhashable types by converting them to hashable tuples
+        key = tuple(_make_hashable(x[unique]) for unique in uniques)
 
         # if a KeyError does not occur then a dict with those values has already been processed
         # if a KeyError occurs a dict with those values has not been found yet
