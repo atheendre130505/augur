@@ -1,4 +1,5 @@
 #SPDX-License-Identifier: MIT
+import json
 #import gunicorn.app.base
 import numpy as np
 from celery import group
@@ -69,7 +70,6 @@ def remove_duplicate_dicts(data: List[dict]) -> List[dict]:
             seen.add(h)
             unique_data.append(d)
     return unique_data
-
 
 def remove_duplicates_by_uniques(data, uniques):
 
